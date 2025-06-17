@@ -46,3 +46,15 @@ docker run -p 8000:8000 deno-web-app
 ```bash
 deno task test-workflow
 ```
+
+## k3s へのデプロイ例
+
+Docker イメージをビルドしてからマニフェストを適用します。
+
+```bash
+docker build -t deno-web-app:latest .
+kubectl apply -f k3s/deno-web-app.yaml
+```
+
+Ingress を利用する場合は、`deno-web-app.local` へのアクセスを k3s
+クラスタの Ingress に向けるよう `/etc/hosts` などを設定してください。
