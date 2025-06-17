@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deno-web-app
+  namespace: default
+data:
+  main.ts: |
+    const handler = (_req: Request): Response => {
+      return new Response("Hello, Deno!", {
+        headers: { "content-type": "text/plain" },
+      });
+    };
+
+    console.log("Server running on http://localhost:8000/");
+    await Deno.serve({ port: 8000 }, handler);
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deno-web-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deno-web-app
+  template:
+    metadata:
+      labels:
+        app: deno-web-app
+    spec:
+      containers:
+      - name: deno-web-app
+        image: denoland/deno:alpine
+        command: ["deno", "run", "--allow-net", "/app/main.ts"]
+        workingDir: /app
+        volumeMounts:
+        - name: app
+          mountPath: /app
+      volumes:
+      - name: app
+        configMap:
+          name: deno-web-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deno-web-app
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: deno-web-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+
