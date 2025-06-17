@@ -7,10 +7,8 @@
 Deno が未インストールの場合は、以下のスクリプトでインストールできます。
 
 ```bash
-curl -fsSL https://deno.land/x/install/install.sh | sh
+curl -fsSL https://deno.land/install.sh | sh
 ```
-
-インストール後、`~/.deno/bin` を `PATH` に追加してください。
 
 ## 実行方法
 
