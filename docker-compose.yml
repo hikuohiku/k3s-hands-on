@@ -1,0 +1,26 @@
+version: '3'
+services:
+  registry:
+    image: registry:2
+    container_name: local-registry
+    ports:
+      - "5000:5000"
+  k3s:
+    image: rancher/k3s:v1.28.2-k3s1
+    container_name: local-k3s
+    privileged: true
+    depends_on:
+      - registry
+    ports:
+      - "6443:6443"
+    command: |
+      sh -c '
+        cat <<"EOT" > /etc/rancher/k3s/registries.yaml
+        mirrors:
+          "localhost:5000":
+            endpoint:
+              - "http://local-registry:5000"
+        EOT
+        exec k3s server
+      '
+
