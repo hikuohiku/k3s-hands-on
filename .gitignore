@@ -1,0 +1,14 @@
+# Act GitHub Actions local testing
+.env
+.secrets
+
+# Test files and configurations
+deno-sample-app/test/act/.env
+deno-sample-app/test/act/.secrets
+
+# Docker and container logs
+act-execution.log
+
+# Temporary files
+*.tmp
+*.log
