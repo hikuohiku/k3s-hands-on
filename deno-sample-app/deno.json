@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "start": "deno run --allow-net main.ts",
+    "test-workflow": "./test/act/run-test.sh"
+  }
+}
