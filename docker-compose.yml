@@ -1,26 +1,19 @@
-version: '3'
+version: '3.8'
 services:
   registry:
-    image: registry:2
+    image: registry:3
     container_name: local-registry
     ports:
       - "5000:5000"
+
   k3s:
-    image: rancher/k3s:v1.28.2-k3s1
+    image: rancher/k3s:v1.30.13-k3s1
     container_name: local-k3s
     privileged: true
-    depends_on:
-      - registry
     ports:
       - "6443:6443"
-    command: |
-      sh -c '
-        cat <<"EOT" > /etc/rancher/k3s/registries.yaml
-        mirrors:
-          "localhost:5000":
-            endpoint:
-              - "http://local-registry:5000"
-        EOT
-        exec k3s server
-      '
+    environment:
+      - K3S_CLUSTER_INIT=true
+      - K3S_TOKEN=mysupersecrettoken
+    command: server
 
