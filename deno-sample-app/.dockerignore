@@ -1,0 +1,19 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+
+# Kubernetes manifests
+k3s/
+
+# Node modules (if any)
+node_modules/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
