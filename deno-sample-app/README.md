@@ -33,3 +33,16 @@ docker run -p 8000:8000 deno-web-app
 
 コンテナ起動後、`http://localhost:8000` にアクセスすると "Hello, Deno!"
 と表示されます。
+
+## act による GitHub Actions の検証
+
+[act](https://github.com/nektos/act) を使用して、GitHub Actions ワークフローをローカルで実行・検証できます。
+
+**必要なツール**
+- act
+- docker
+
+**実行方法**
+```bash
+deno task test-workflow
+```
