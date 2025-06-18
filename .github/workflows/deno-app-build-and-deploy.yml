@@ -1,4 +1,4 @@
-name: Build and Push and Deploy Deno App to GHCR
+name: Build and Push and Deploy Deno App
 
 on:
   push:
