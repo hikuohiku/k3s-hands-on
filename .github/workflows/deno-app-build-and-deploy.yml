@@ -1,4 +1,4 @@
-name: Build and Push Deno App to GHCR
+name: Build and Push and Deploy Deno App to GHCR
 
 on:
   push:
@@ -48,3 +48,14 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Set kubeconfig
+        run: |
+          echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+
+      - name: Deploy to k3s via kubectl
+        run: |
+          kubectl apply -f deno-sample-app/k3s/deno-sample-app.yaml
