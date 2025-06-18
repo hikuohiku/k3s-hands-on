@@ -4,5 +4,5 @@ const handler = (_req: Request): Response => {
   });
 };
 
-console.log("Server running on http://localhost:8000/");
+console.log("Server running");
 await Deno.serve({ port: 8000 }, handler);
