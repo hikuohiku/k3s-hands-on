@@ -21,4 +21,6 @@ fi
 # プロジェクトルートに移動して act を実行
 cd "${PROJECT_ROOT}"
 
-act push --env-file "${SCRIPT_DIR}/.env" --secret-file "${SCRIPT_DIR}/.secrets"
+KUBECONFIG_DATA=$(docker compose -f deno-sample-app/docker-compose.yml exec k3s-server cat /etc/rancher/k3s/k3s.yaml | base64 -w 0)
+
+act push --env-file "${SCRIPT_DIR}/.env" --secret-file "${SCRIPT_DIR}/.secrets" --secret "KUBECONFIG_DATA=${KUBECONFIG_DATA}"
